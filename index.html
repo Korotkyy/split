@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/styles.css" />
+</head>
+<body>
+    <section class="section-hiro-section">
+        <div class="hiro-section">
+            <h1 class="hiro">RICH YOUR GOALS</h1>
+            <div id="imageContainer"></div> <!-- Container for uploaded image -->
+            <div id="buttonContainer">
+                <button type="button" class="order-service" data-modal-open onclick="triggerFileUpload()">UPLOAD IMAGE</button>
+            </div>
+        </div>
+    </section>
+    <input type="file" id="fileInput" accept="image/*" style="display: none;" onchange="handleFileUpload(event)">
+
+    <!-- Модальное окно -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <p>Это модальное окно!</p>
+            <label for="divideNumber">Введите число для деления изображения:</label>
+            <input type="number" id="divideNumber" name="divideNumber" min="1" step="1">
+            <button onclick="divideImage()">Подтвердить</button>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
