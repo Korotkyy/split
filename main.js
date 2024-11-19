@@ -181,3 +181,6 @@ function toggleCellColor(cell) {
         cell.height
     );
 }
+
+
+
