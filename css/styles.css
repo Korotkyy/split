@@ -1,7 +1,8 @@
 .section-hiro-section {
     width: 100%;
     height: 900px;
-    background-image: url(/image/background-72250_1920.jpg);
+    background-image: url('https://korotkyy.github.io/split/image/background-72250_1920.jpg');
+
 }
 
 .hiro {
