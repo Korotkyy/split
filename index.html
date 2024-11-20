@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SplitUp</title>
     <link rel="stylesheet" href="./css/styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsCalc/1.0.1/jsCalc.min.css">
 </head>
 <body>
     <header>
@@ -15,41 +16,45 @@
                     <ul>
                         <li><a href="#">Main page</a></li>
                         <li><a href="#">Mygoals</a></li>
-                        <li><a href="#" onclick="openCalculator()">Calculator</a></li>
+                        <li><a href="#" onclick="toggleCalculator()">Calculator</a></li>
                     </ul>
                 </nav>
-                
             </div>
         </div>
+        
     </header>
     <section class="section-hiro-section">
         <div class="hiro-section">
-            <h1 class="hiro">RICH YOUR GOALS</h1>
+            <div class="goal-list-container">
+                <h2>My Goals</h2>
+                <ul id="goalList">
+                </ul>
+                <button onclick="addNewGoal()">Add Goal</button>
+            </div>
             <div id="imageContainer"></div> <!-- Container for uploaded image -->
             <div id="buttonContainer">
+                <div id="progressContainer" style="text-align: center; margin-top: 20px; padding-bottom: 50px;">
+                    <span id="progressText">Progress: 0%</span> <!-- Progress text -->
+                </div>
                 <button type="button" class="order-service" data-modal-open onclick="triggerFileUpload()">UPLOAD IMAGE</button>
             </div>
         </div>
     </section>
+    
     <input type="file" id="fileInput" accept="image/*" style="display: none;" onchange="handleFileUpload(event)">
 
-    <!-- Модальное окно -->
+    <!-- Modal -->
     <div id="modal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            <p>Это модальное окно!</p>
             <label for="divideNumber">Введите число для деления изображения:</label>
             <input type="number" id="divideNumber" name="divideNumber" min="1" step="1">
             <button onclick="divideImage()">Подтвердить</button>
         </div>
     </div>
 
-    
-
     <script src="main.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/user/repository/calculator.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/user/repository/calculator.css">
-
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsCalc/1.0.1/jsCalc.min.js"></script>
 </body>
 </html>

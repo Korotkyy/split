@@ -16,6 +16,63 @@
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
 }
 
+.hiro-section {
+    display: flex; /* Используем flexbox для двух колонок */
+    justify-content: space-between; /* Размещаем блоки с равными отступами */
+    align-items: flex-start; /* Выравнивание по верхнему краю */
+    padding: 20px;
+}
+
+.goal-list-container {
+    width: calc(15% - 20px); /* Занимает 50% от ширины секции */
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.goal-list-container h2 {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#goalList {
+    list-style: none;
+    padding: 0;
+}
+
+#goalList li {
+    font-size: 18px;
+    margin: 10px 0;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#goalList li:hover {
+    background-color: #f0f0f0;
+}
+
+.goal-list-container button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #30485f;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.goal-list-container button:hover {
+    background-color: #40a8bf;
+}
+
+
 
 header {
     background-color: #30485f;
@@ -61,7 +118,7 @@ header {
 #imageContainer {
     text-align: center;
     margin-bottom: 20px;
-    padding-bottom: 50px;
+    padding-bottom: 20px;
 }
 
 #buttonContainer {
@@ -103,32 +160,55 @@ header {
     z-index: 1;
     left: 0;
     top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgb(0,0,0);
-    background-color: rgba(0,0,0,0.4);
+    width: 100%; /* Полная ширина экрана */
+    height: 100%; /* Полная высота экрана */
+    overflow: auto; /* Если содержимое выходит за пределы, добавляем прокрутку */
+    background-color: rgba(0, 0, 0, 0.4); /* Полупрозрачный черный фон */
 }
 
 .modal-content {
     background-color: #fefefe;
-    margin: 15% auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
+    max-width: 500px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    display: flex; /* Используем flexbox */
+    flex-direction: column; /* Все элементы размещаются в колонку */
+    align-items: center; /* Центрируем элементы горизонтально */
+    gap: 10px; /* Отступы между элементами */
 }
+
+
 
 .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+    position: absolute; /* Позволяет позиционировать крестик относительно родителя */
+    top: 10px; /* Отступ сверху */
+    right: 10px; /* Отступ справа */
+    font-size: 24px; /* Размер крестика */
+    font-weight: bold; /* Жирный шрифт для крестика */
+    color: #333; /* Цвет */
+    cursor: pointer; /* Указывает, что это интерактивный элемент */
 }
 
-.close:hover,
+.close:hover {
+    color: #f00; /* Изменение цвета при наведении */
+}
+
 .close:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+
+#progressText {
+    font-size: 40px;
+    font-weight: bold;
+    color: #000000
 }
 

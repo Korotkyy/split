@@ -2,9 +2,21 @@ let image, canvas, ctx;
 let grid = [];
 let selectedCells = new Set();
 let grayscaleImage; // Сохраним результат градации серого
-const WORKSPACE_WIDTH = 800; // Ширина рабочей зоны
-const WORKSPACE_HEIGHT = 600; // Высота рабочей зоны
+let selectedCellsCount = 0; // Счётчик выбранных клеток
+const WORKSPACE_WIDTH = 700; // Ширина рабочей зоны
+const WORKSPACE_HEIGHT = 500; // Высота рабочей зоны
 let scaledDimensions = {}; // Для сохранения масштабированных размеров изображения
+
+function addNewGoal() {
+    const goal = prompt("Enter your new goal:");
+    if (goal) {
+        const goalList = document.getElementById('goalList');
+        const listItem = document.createElement('li');
+        listItem.textContent = goal;
+        goalList.appendChild(listItem);
+    }
+}
+
 
 function triggerFileUpload() {
     document.getElementById('fileInput').click();
@@ -69,7 +81,6 @@ function fitImageToCanvas() {
 }
 
 function convertToGrayscale() {
-    // Проверяем, есть ли контекст и данные изображения
     if (!ctx) return;
 
     const { xOffset, yOffset, scaledWidth, scaledHeight } = scaledDimensions;
@@ -114,17 +125,16 @@ function drawGrid(divideNumber) {
     const { xOffset, yOffset, scaledWidth, scaledHeight } = scaledDimensions;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.putImageData(grayscaleImage, xOffset, yOffset); // Перерисовываем серое изображение
+    ctx.putImageData(grayscaleImage, xOffset, yOffset);
 
     grid = [];
     selectedCells.clear();
+    selectedCellsCount = 0; // Сбрасываем выбранные клетки
 
-    // Найти подходящие количества строк и столбцов
-    const aspectRatio = scaledWidth / scaledHeight; // Соотношение сторон
-    let cols = Math.round(Math.sqrt(divideNumber * aspectRatio)); // Больше блоков по ширине
-    let rows = Math.round(divideNumber / cols); // Остаток по высоте
+    const aspectRatio = scaledWidth / scaledHeight;
+    let cols = Math.round(Math.sqrt(divideNumber * aspectRatio));
+    let rows = Math.round(divideNumber / cols);
 
-    // Пересчёт, если количество блоков не равно divideNumber
     while (cols * rows < divideNumber) {
         cols++;
         rows = Math.ceil(divideNumber / cols);
@@ -138,7 +148,7 @@ function drawGrid(divideNumber) {
 
     for (let i = 0; i < cols; i++) {
         for (let j = 0; j < rows; j++) {
-            if (grid.length >= divideNumber) break; // Остановиться, если достигли заданного количества блоков
+            if (grid.length >= divideNumber) break;
 
             const cell = {
                 x: xOffset + i * colWidth,
@@ -151,6 +161,8 @@ function drawGrid(divideNumber) {
         }
     }
 
+    updateProgress(); // Обновляем прогресс после построения сетки
+
     canvas.addEventListener('click', handleCanvasClick);
 }
 
@@ -162,6 +174,7 @@ function handleCanvasClick(event) {
     const cell = grid.find(cell => x >= cell.x && x < cell.x + cell.width && y >= cell.y && y < cell.y + cell.height);
     if (cell) {
         toggleCellColor(cell);
+        updateProgress(); // Обновляем прогресс после выбора клетки
     }
 }
 
@@ -169,6 +182,7 @@ function toggleCellColor(cell) {
     if (selectedCells.has(cell)) return;
 
     selectedCells.add(cell);
+    selectedCellsCount++;
     ctx.drawImage(
         image,
         (cell.x - scaledDimensions.xOffset) * (image.width / scaledDimensions.scaledWidth),
@@ -182,5 +196,19 @@ function toggleCellColor(cell) {
     );
 }
 
+function updateProgress() {
+    const totalCells = grid.length;
+    const progressPercentage = Math.round((selectedCellsCount / totalCells) * 100);
+    document.getElementById('progressText').textContent = `Progress: ${progressPercentage}%`;
+}
+
+function toggleCalculator() {
+    const calculator = document.getElementById('calculator');
+    if (calculator.style.display === 'none') {
+        calculator.style.display = 'block';
+    } else {
+        calculator.style.display = 'none';
+    }
+}
 
 
