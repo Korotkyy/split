@@ -30,7 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Если цель выполнена
                     if (goalCount - 1 === 0) {
                         target.style.textDecoration = 'line-through'; // Зачёркиваем текст
-                        alert(`Цель "${goalText}" выполнена!`);
                     }
                 } else {
                     alert('Все действия для этой цели уже выполнены!');
@@ -110,6 +109,9 @@ function handleFileUpload(event) {
     if (file) {
         const reader = new FileReader();
         reader.onload = function (e) {
+            // Сбрасываем цели
+            resetGoals();
+
             // Создаём объект изображения
             image = new Image();
             image.src = e.target.result;
@@ -140,6 +142,20 @@ function handleFileUpload(event) {
         reader.readAsDataURL(file);
     }
 }
+
+// Функция для сброса целей
+function resetGoals() {
+    const goalList = document.getElementById('goalList');
+    goalList.innerHTML = ''; // Очищаем список целей
+
+    const goalInput = document.getElementById('goalInput');
+    const goalNumber = document.getElementById('goalNumber');
+    goalInput.value = ''; // Очищаем текстовое поле
+    goalNumber.value = ''; // Очищаем числовое поле
+}
+
+
+
 
 
 function createCanvas() {
