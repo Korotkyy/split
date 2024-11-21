@@ -27,34 +27,70 @@
         <div class="hiro-section">
             <div class="goal-list-container">
                 <h2>My Goals</h2>
-                <ul id="goalList">
-                </ul>
+                <ul id="goalList"></ul>
+                <input id="goalInput" type="text" placeholder="Enter your goal" />
+                <input id="goalNumber" type="number" placeholder="Enter number" min="1" />
                 <button onclick="addNewGoal()">Add Goal</button>
             </div>
-            <div id="imageContainer"></div> <!-- Container for uploaded image -->
+            
+            <div id="imageWrapper">
+                <div id="imageContainer"></div> <!-- Контейнер для изображения -->
+                <button type="button" id="uploadButton" class="order-service" onclick="triggerFileUpload()">UPLOAD IMAGE</button>
+            </div>
+            <input type="file" id="fileInput" accept="image/*" style="display: none;" onchange="handleFileUpload(event)">
+            
             <div id="buttonContainer">
                 <div id="progressContainer" style="text-align: center; margin-top: 20px; padding-bottom: 50px;">
                     <span id="progressText">Progress: 0%</span> <!-- Progress text -->
+                    <button class="divide-button">DIVIDE</button>
                 </div>
-                <button type="button" class="order-service" data-modal-open onclick="triggerFileUpload()">UPLOAD IMAGE</button>
             </div>
         </div>
     </section>
+    <div class="top-bar">
+            <div class="container">
+                <a href="#" class="logo">SplitUp</a>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="#">Main page</a></li>
+                        <li><a href="#">Mygoals</a></li>
+                        <li><a href="#" onclick="toggleCalculator()">Calculator</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
     
     <input type="file" id="fileInput" accept="image/*" style="display: none;" onchange="handleFileUpload(event)">
 
-    <!-- Modal -->
-    <div id="modal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <label for="divideNumber">Введите число для деления изображения:</label>
-            <input type="number" id="divideNumber" name="divideNumber" min="1" step="1">
-            <button onclick="divideImage()">Подтвердить</button>
+    <div class="top-bar">
+            <div class="container">
+                <a href="#" class="logo">SplitUp</a>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="#">Main page</a></li>
+                        <li><a href="#">Mygoals</a></li>
+                        <li><a href="#" onclick="toggleCalculator()">Calculator</a></li>
+                    </ul>
+                </nav>
+            </div>
         </div>
-    </div>
 
     <script src="main.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/user/repository/calculator.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsCalc/1.0.1/jsCalc.min.js"></script>
+    <footer>
+        <div class="footer-container">
+            <div class="social-links">
+                <a href="https://facebook.com" target="_blank" class="social-link">Facebook</a>
+                <a href="https://twitter.com" target="_blank" class="social-link">Twitter</a>
+                <a href="https://instagram.com" target="_blank" class="social-link">Instagram</a>
+                <a href="https://linkedin.com" target="_blank" class="social-link">LinkedIn</a>
+            </div>
+            <div class="copyright">
+                &copy; 2024 SplitUp. All rights reserved.
+            </div>
+        </div>
+    </footer>
+    
 </body>
 </html>

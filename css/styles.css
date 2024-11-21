@@ -24,8 +24,8 @@
 }
 
 .goal-list-container {
-    width: calc(15% - 20px); /* Занимает 50% от ширины секции */
-    background-color: #f9f9f9;
+    width: calc(20% - 20px); /* Занимает 50% от ширины секции */
+    background-color: #30485f;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -33,10 +33,25 @@
 }
 
 .goal-list-container h2 {
+    color: #ffffff;
     font-size: 24px;
     text-align: center;
     margin-bottom: 10px;
 }
+
+#goalList input[type="number"] {
+    width: 70px;
+    margin-left: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#goalList input[type="number"]:focus {
+    outline: none;
+    border-color: #40a8bf;
+}
+
 
 #goalList {
     list-style: none;
@@ -61,7 +76,7 @@
     display: block;
     margin: 20px auto;
     padding: 10px 20px;
-    background-color: #30485f;
+    background-color: #193147;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -122,8 +137,70 @@ header {
 }
 
 #buttonContainer {
-    text-align: center;
-    margin-top: 20px;
+    width: calc(20% - 20px); /* Занимает 50% от ширины секции */
+    background-color: #30485f;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex; /* Включаем Flexbox */
+    flex-direction: column; /* Размещаем элементы в колонку */
+    align-items: center; /* Центрируем элементы по горизонтали */
+    gap: 20px; /* Добавляем отступы между элементами */
+    margin-top: 20px; /* Отступ сверху */
+}
+
+#imageWrapper {
+    position: relative; /* Создаем контекст позиционирования для кнопки */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Высота экрана */
+}
+
+#uploadButton {
+    position: absolute; /* Центрирование до загрузки изображения */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150px; /* Фиксированная ширина кнопки */
+    height: 50px; /* Фиксированная высота кнопки */
+    background-color: #193147; /* Цвет фона */
+    color: #fff; /* Цвет текста */
+    font-size: 13px; /* Увеличенный текст */
+    border: none; /* Убираем обводку */
+    border-radius: 8px; /* Скругленные углы */
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2); /* Тень */
+    text-align: center; /* Выравнивание текста по центру */
+    cursor: pointer; /* Указатель мыши */
+    transition: all 0.3s ease; /* Плавный переход для эффектов */
+}
+
+#uploadButton:hover {
+    background-color: #40a8bf;
+}
+
+
+/* Состояние кнопки после загрузки изображения */
+#uploadButton.below-image {
+    position: static; /* Позиционирование под изображением */
+    margin-top: 20px; /* Отступ от изображения */
+    transform: none; /* Убираем центрирование */
+    background-color: #40a8bf; /* Цвет фона */
+}
+
+
+#imageContainer img {
+    display: block;
+    max-width: 80%;
+    margin: 20px auto;
+}
+
+#uploadButton.below-image {
+    position: static; /* Возвращаем стандартное позиционирование */
+    margin-top: 20px; /* Отступ от изображения */
+    transform: none; /* Убираем сдвиг */
 }
 
 .order-service {
@@ -147,10 +224,14 @@ header {
     background-color: #f0f0f0;
     border: 1px solid #ccc;
     cursor: pointer;
+    border: none; /* Убираем обводку */
+    border-radius: 8px; /* Скругленные углы */
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2); /* Тень */
+    transition: all 0.3s ease;
 }
 
 .divide-button:hover {
-    background-color: #30485f;
+    background-color: #40a8bf;
 }
 
 /* Стили для модального окна */
@@ -209,6 +290,67 @@ header {
 #progressText {
     font-size: 40px;
     font-weight: bold;
-    color: #000000
+    color: #ffffff
 }
+
+#progressContainer {
+    text-align: center;
+    margin-top: 0; /* Убираем лишний отступ сверху */
+    padding-bottom: 0; /* Убираем лишний отступ снизу */
+}
+
+.order-service {
+    width: 100%; /* Можно задать фиксированную ширину для кнопки */
+    max-width: 150px; /* Ограничиваем максимальную ширину */
+    text-align: center; /* Центрируем текст внутри кнопки */
+}
+
+.divide-button {
+    width: 150%; /* Также фиксируем ширину */
+    max-width: 100px; /* Ограничиваем максимальную ширину */
+}
+
+footer {
+    background-color: #30485f;
+    color: #ffffff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.social-link {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.social-link:hover {
+    background-color: #40a8bf;
+    color: #ffffff;
+}
+
+.copyright {
+    font-size: 14px;
+    margin-top: 10px;
+    color: #b0c4de;
+}
+
 

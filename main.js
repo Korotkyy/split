@@ -7,19 +7,102 @@ const WORKSPACE_WIDTH = 700; // Ширина рабочей зоны
 const WORKSPACE_HEIGHT = 500; // Высота рабочей зоны
 let scaledDimensions = {}; // Для сохранения масштабированных размеров изображения
 
-function addNewGoal() {
-    const goal = prompt("Enter your new goal:");
-    if (goal) {
-        const goalList = document.getElementById('goalList');
-        const listItem = document.createElement('li');
-        listItem.textContent = goal;
-        goalList.appendChild(listItem);
+document.addEventListener('DOMContentLoaded', () => {
+    const goalList = document.getElementById('goalList');
+    if (goalList) {
+        goalList.addEventListener('click', (event) => {
+            const target = event.target.closest('li'); // Ищем кликнутый элемент li
+
+            // Проверяем, что это действительно элемент списка
+            if (target && target.tagName === 'LI') {
+                const inputField = target.querySelector('input'); // Ищем поле input внутри цели
+                const goalText = target.querySelector('span').textContent.trim(); // Текст цели
+                const goalCount = parseInt(inputField.value, 10); // Текущее значение
+
+                // Если поле ввода валидно
+                if (!isNaN(goalCount) && goalCount > 0) {
+                    // Уменьшаем значение в input
+                    inputField.value = goalCount - 1;
+
+                    // Закрашиваем случайное поле
+                    paintRandomCell();
+
+                    // Если цель выполнена
+                    if (goalCount - 1 === 0) {
+                        target.style.textDecoration = 'line-through'; // Зачёркиваем текст
+                        alert(`Цель "${goalText}" выполнена!`);
+                    }
+                } else {
+                    alert('Все действия для этой цели уже выполнены!');
+                }
+            }
+        });
+    } else {
+        console.error("Элемент с id='goalList' не найден.");
+    }
+}); // <-- Закрытие основного обработчика DOMContentLoaded
+
+
+
+function paintRandomCell() {
+    const unselectedCells = Array.from(grid).filter((cell) => !selectedCells.has(cell)); // Неиспользованные клетки
+    if (unselectedCells.length > 0) {
+        const randomCell = unselectedCells[Math.floor(Math.random() * unselectedCells.length)];
+        toggleCellColor(randomCell); // Закрашиваем клетку
+        updateProgress(); // Обновляем прогресс
+    } else {
+        alert('Нет доступных клеток для закрашивания!');
     }
 }
 
 
+function addNewGoal() {
+    const goalText = document.getElementById('goalInput').value.trim(); // Получаем текст цели
+    const goalNumber = parseInt(document.getElementById('goalNumber').value, 10); // Получаем число
+
+    // Проверка корректности ввода
+    if (goalText && !isNaN(goalNumber) && goalNumber > 0) {
+        const goalList = document.getElementById('goalList'); // Получаем список целей
+
+        // Создаём новый элемент списка
+        const li = document.createElement('li');
+        li.innerHTML = `
+            <span>${goalText}</span>
+            <input type="number" value="${goalNumber}" min="0" readonly />
+        `;
+
+        // Добавляем новый элемент в список
+        goalList.appendChild(li);
+
+        // Очищаем поля ввода
+        document.getElementById('goalInput').value = '';
+        document.getElementById('goalNumber').value = '';
+    } else {
+        alert('Please enter a valid goal and a number greater than 0.');
+    }
+}
+
+
+
+function calculateTotalDivisions() {
+    const inputs = document.querySelectorAll('#goalList input[type="number"]');
+    let totalDivisions = 0;
+
+    inputs.forEach(input => {
+        const value = parseInt(input.value, 10);
+        if (!isNaN(value) && value > 0) { // Проверяем, что значение является числом и больше нуля
+            totalDivisions += value;
+        }
+    });
+
+    return totalDivisions;
+}
+
+
+
+
 function triggerFileUpload() {
-    document.getElementById('fileInput').click();
+    document.getElementById('fileInput').click(); // Открыть окно выбора файла
 }
 
 function handleFileUpload(event) {
@@ -27,14 +110,21 @@ function handleFileUpload(event) {
     if (file) {
         const reader = new FileReader();
         reader.onload = function (e) {
+            // Создаём объект изображения
             image = new Image();
             image.src = e.target.result;
             image.alt = file.name;
             image.onload = function () {
+                // Создаём холст и добавляем изображение
                 createCanvas();
                 fitImageToCanvas();
                 convertToGrayscale(); // Преобразуем в градации серого
 
+                // Перемещаем кнопку Upload Image под изображение
+                const uploadButton = document.getElementById('uploadButton');
+                uploadButton.classList.add('below-image');
+
+                // Добавляем кнопку Divide, если её ещё нет
                 if (!document.querySelector('.divide-button')) {
                     const divideButton = document.createElement('button');
                     divideButton.textContent = 'DIVIDE';
@@ -50,6 +140,7 @@ function handleFileUpload(event) {
         reader.readAsDataURL(file);
     }
 }
+
 
 function createCanvas() {
     canvas = document.createElement('canvas');
@@ -94,16 +185,6 @@ function convertToGrayscale() {
     ctx.putImageData(grayscaleImage, xOffset, yOffset);
 }
 
-function openModal() {
-    const modal = document.getElementById('modal');
-    if (modal) modal.style.display = "block";
-}
-
-function closeModal() {
-    const modal = document.getElementById('modal');
-    if (modal) modal.style.display = "none";
-}
-
 window.onclick = function (event) {
     const modal = document.getElementById('modal');
     if (event.target === modal) {
@@ -112,14 +193,16 @@ window.onclick = function (event) {
 }
 
 function divideImage() {
-    const divideNumber = parseInt(document.getElementById('divideNumber').value);
-    if (divideNumber && divideNumber > 0) {
-        drawGrid(divideNumber);
-        closeModal();
+    const totalDivisions = calculateTotalDivisions();
+    if (totalDivisions > 0) {
+        drawGrid(totalDivisions);
     } else {
-        alert('Пожалуйста, введите корректное число.');
+        alert('Please specify valid numbers for all goals.');
     }
 }
+console.log(`Total cells required: ${calculateTotalDivisions()}`);
+
+
 
 function drawGrid(divideNumber) {
     const { xOffset, yOffset, scaledWidth, scaledHeight } = scaledDimensions;
@@ -210,5 +293,20 @@ function toggleCalculator() {
         calculator.style.display = 'none';
     }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const divideButton = document.querySelector('.divide-button');
+    if (divideButton) {
+        divideButton.addEventListener('click', () => {
+            const totalDivisions = calculateTotalDivisions();
+            if (totalDivisions > 0) {
+                drawGrid(totalDivisions);
+            } else {
+                alert('Please specify valid numbers for all goals.');
+            }
+        });
+    }
+});
+
 
 
