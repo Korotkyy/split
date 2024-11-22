@@ -25,7 +25,7 @@
 
 .goal-list-container {
     width: calc(20% - 20px); /* Занимает 50% от ширины секции */
-    background-color: #30485f;
+    background-color: #d3ba8e;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -90,7 +90,7 @@
 
 
 header {
-    background-color: #30485f;
+    background-color: #304d5f;
     color: #fff;
     padding: 10px 0;
     position: sticky;
@@ -138,7 +138,7 @@ header {
 
 #buttonContainer {
     width: calc(20% - 20px); /* Занимает 50% от ширины секции */
-    background-color: #30485f;
+    background-color: #d3ba8e;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -219,9 +219,10 @@ header {
 }
 
 .divide-button {
+    color: #ffffff;
     margin-top: 20px;
     padding: 10px 20px;
-    background-color: #f0f0f0;
+    background-color: #30485f;
     border: 1px solid #ccc;
     cursor: pointer;
     border: none; /* Убираем обводку */
