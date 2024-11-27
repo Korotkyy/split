@@ -6,6 +6,8 @@
     <title>SplitUp</title>
     <link rel="stylesheet" href="./css/styles.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsCalc/1.0.1/jsCalc.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 </head>
 <body>
     <header>
@@ -15,8 +17,9 @@
                 <nav class="main-nav">
                     <ul>
                         <li><a href="#">Main page</a></li>
-                        <li><a href="#">Mygoals</a></li>
+                        <li><a href="#">My goals</a></li>
                         <li><a href="#" onclick="toggleCalculator()">Calculator</a></li>
+                        <li><a href="#">Wallet</a></li>
                     </ul>
                 </nav>
             </div>
@@ -30,7 +33,7 @@
                 <ul id="goalList"></ul>
                 <input id="goalInput" type="text" placeholder="Enter your goal" />
                 <input id="goalNumber" type="number" placeholder="Enter number" min="1" />
-                <button onclick="addNewGoal()">Add Goal</button>
+                <button class="addNewGoal" onclick="addNewGoal()">Add Goal</button>
             </div>
             
             <div id="imageWrapper">

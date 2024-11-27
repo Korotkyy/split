@@ -324,5 +324,37 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+function resizeCanvas() {
+    const canvas = document.querySelector('canvas'); // Найти canvas
+    if (canvas) {
+        // Устанавливаем размеры холста равными текущим размерам элемента
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+
+        // При необходимости можно обновить содержимое
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height); // Очищаем холст
+
+        // Пример: Добавьте сюда код для перерисовки изображения
+        if (image) {
+            const scale = Math.min(
+                canvas.width / image.width,
+                canvas.height / image.height
+            );
+            const scaledWidth = image.width * scale;
+            const scaledHeight = image.height * scale;
+            const xOffset = (canvas.width - scaledWidth) / 2;
+            const yOffset = (canvas.height - scaledHeight) / 2;
+
+            ctx.drawImage(image, 0, 0, image.width, image.height, xOffset, yOffset, scaledWidth, scaledHeight);
+        }
+    }
+}
+
+// Вызываем при загрузке страницы и изменении размера окна
+window.addEventListener('load', resizeCanvas);
+window.addEventListener('resize', resizeCanvas);
+
+
 
 
