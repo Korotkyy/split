@@ -65,10 +65,20 @@ function addNewGoal() {
 
         // Создаём новый элемент списка
         const li = document.createElement('li');
+        li.classList.add('goal-item');
         li.innerHTML = `
             <span>${goalText}</span>
             <input type="number" value="${goalNumber}" min="0" readonly />
         `;
+
+        // Создаём плавающую кнопку
+        const floatButton = document.createElement('button');
+        floatButton.textContent = '▼';
+        floatButton.className = 'floating-btn';
+        floatButton.onclick = () => toggleDropdown(li); // Привязываем функцию
+
+        // Добавляем кнопку в элемент списка
+        li.appendChild(floatButton);
 
         // Добавляем новый элемент в список
         goalList.appendChild(li);
@@ -80,6 +90,70 @@ function addNewGoal() {
         alert('Please enter a valid goal and a number greater than 0.');
     }
 }
+
+// Обработка dropdown для каждой цели
+function toggleDropdown(goalElement) {
+    // Если dropdown уже существует, удаляем его
+    let dropdown = goalElement.querySelector('.dropdown-container');
+    if (dropdown) {
+        dropdown.remove();
+        return;
+    }
+
+    // Создаём контейнер для dropdown
+    dropdown = document.createElement('div');
+    dropdown.className = 'dropdown-container';
+
+    // Добавляем поле ввода и кнопку
+    const input = document.createElement('input');
+    input.type = 'number';
+    input.placeholder = 'Enter cubes to color';
+    input.className = 'dropdown-input';
+
+    const button = document.createElement('button');
+    button.textContent = 'Paint';
+    button.className = 'dropdown-button';
+    button.onclick = () => paintMultipleCells(goalElement, input.value);
+
+    // Добавляем элементы в dropdown
+    dropdown.appendChild(input);
+    dropdown.appendChild(button);
+
+    // Добавляем dropdown к цели
+    goalElement.appendChild(dropdown);
+}
+
+// Закрашивание нескольких клеток
+function paintMultipleCells(goalElement, count) {
+    const inputField = goalElement.querySelector('input[type="number"]');
+    const remainingCells = parseInt(inputField.value, 10);
+    const cellsToPaint = parseInt(count, 10);
+
+    // Проверяем корректность ввода
+    if (isNaN(cellsToPaint) || cellsToPaint <= 0) {
+        alert('Please enter a valid number greater than 0.');
+        return;
+    }
+
+    if (cellsToPaint > remainingCells) {
+        alert(`You can only paint up to ${remainingCells} cells.`);
+        return;
+    }
+
+    // Закрашиваем клетки
+    for (let i = 0; i < cellsToPaint; i++) {
+        paintRandomCell();
+    }
+
+    // Обновляем значение цели
+    inputField.value = remainingCells - cellsToPaint;
+
+    // Если цель выполнена
+    if (remainingCells - cellsToPaint === 0) {
+        goalElement.style.textDecoration = 'line-through';
+    }
+}
+
 
 
 
@@ -154,7 +228,80 @@ function resetGoals() {
     goalNumber.value = ''; // Очищаем числовое поле
 }
 
+function addNewGoal() {
+    const goalText = document.getElementById('goalInput').value.trim(); // Получаем текст цели
+    const goalNumber = parseInt(document.getElementById('goalNumber').value, 10); // Получаем число
 
+    // Проверка корректности ввода
+    if (goalText && !isNaN(goalNumber) && goalNumber > 0) {
+        const goalList = document.getElementById('goalList'); // Получаем список целей
+
+        // Создаём новый элемент списка
+        const li = document.createElement('li');
+        li.classList.add('goal-item');
+        li.innerHTML = `
+            <span>${goalText}</span>
+            <input type="number" value="${goalNumber}" min="0" readonly />
+        `;
+
+        // Создаём плавающую кнопку
+        const floatButton = document.createElement('button');
+        floatButton.textContent = '▼';
+        floatButton.className = 'floating-btn';
+        floatButton.onclick = () => toggleDropdownForGoal(li);
+
+        // Добавляем кнопку в элемент списка
+        li.appendChild(floatButton);
+
+        // Добавляем новый элемент в список
+        goalList.appendChild(li);
+
+        // Очищаем поля ввода
+        document.getElementById('goalInput').value = '';
+        document.getElementById('goalNumber').value = '';
+    } else {
+        alert('Please enter a valid goal and a number greater than 0.');
+    }
+}
+
+function toggleDropdownForGoal(goalElement) {
+    // Если dropdown уже существует, удаляем его
+    let dropdown = goalElement.querySelector('.dropdown-container');
+    if (dropdown) {
+        dropdown.remove();
+        return;
+    }
+
+    // Создаём контейнер для dropdown
+    dropdown = document.createElement('div');
+    dropdown.className = 'dropdown-container';
+
+    // Создаём поле ввода и кнопку
+    const input = document.createElement('input');
+    input.type = 'number';
+    input.placeholder = 'Enter cubes to color';
+    input.className = 'dropdown-input';
+
+    const button = document.createElement('button');
+    button.textContent = 'Paint';
+    button.className = 'dropdown-button';
+    button.onclick = () => {
+        const count = parseInt(input.value, 10);
+        if (!isNaN(count) && count > 0) {
+            paintMultipleCells(goalElement, count);
+            dropdown.remove(); // Убираем dropdown после применения
+        } else {
+            alert('Please enter a valid number greater than 0.');
+        }
+    };
+
+    // Добавляем элементы в dropdown
+    dropdown.appendChild(input);
+    dropdown.appendChild(button);
+
+    // Вставляем dropdown в цель
+    goalElement.appendChild(dropdown);
+}
 
 
 

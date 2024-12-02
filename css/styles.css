@@ -75,7 +75,7 @@ canvas {
 }
 
 .goal-list-container {
-    width: 200px; /* Занимает 50% от ширины секции */
+    width: 250px; /* Занимает 50% от ширины секции */
     background-color: #d3ba8e;
     padding: 20px;
     border: 1px solid #ccc;
@@ -91,7 +91,7 @@ canvas {
 }
 
 #goalList input[type="number"] {
-    width: 70px;
+    width: 50px;
     margin-left: 10px;
     padding: 5px;
     border: 1px solid #ccc;
@@ -126,7 +126,7 @@ canvas {
 .goal-list-container button {
     display: block;
     margin: 20px auto;
-    padding: 10px 20px;
+    padding: 10px 10px;
     background-color: #193147;
     color: #fff;
     border: none;
@@ -270,6 +270,72 @@ header {
     background-color: #40a8bf;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
 }
+
+.goal-item {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.floating-btn {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.floating-btn:hover {
+    background-color: #0056b3;
+}
+
+.dropdown-container {
+    display: flex;
+    margin-top: 10px;
+}
+
+.dropdown-input {
+    flex: 1;
+    padding: 5px;
+    margin-right: 5px;
+}
+
+.dropdown-button {
+    padding: 5px 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.dropdown-button:hover {
+    background-color: #218838;
+}
+
+
+.goal-item .floating-btn {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    right: 1px;
+    top: 1%;
+    transform: translateY(-50%);
+    background-color: transparent;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 20%;
+    width: 10px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.goal-item .floating-btn:hover {
+    background-color: #afc2cf;
+
+}
+
 
 .divide-button {
     color: #ffffff;
