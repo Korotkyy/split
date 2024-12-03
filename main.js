@@ -73,9 +73,12 @@ function addNewGoal() {
 
         // Создаём плавающую кнопку
         const floatButton = document.createElement('button');
-        floatButton.textContent = '▼';
-        floatButton.className = 'floating-btn';
-        floatButton.onclick = () => toggleDropdown(li); // Привязываем функцию
+floatButton.textContent = '▼';
+floatButton.className = 'floating-btn';
+floatButton.onclick = (event) => {
+    event.stopPropagation(); // Останавливаем всплытие события
+    toggleDropdown(li); // Привязываем функцию
+};
 
         // Добавляем кнопку в элемент списка
         li.appendChild(floatButton);
@@ -103,6 +106,9 @@ function toggleDropdown(goalElement) {
     // Создаём контейнер для dropdown
     dropdown = document.createElement('div');
     dropdown.className = 'dropdown-container';
+
+     // Останавливаем всплытие клика на dropdown-container
+     dropdown.addEventListener('click', (event) => event.stopPropagation());
 
     // Добавляем поле ввода и кнопку
     const input = document.createElement('input');
@@ -248,7 +254,10 @@ function addNewGoal() {
         const floatButton = document.createElement('button');
         floatButton.textContent = '▼';
         floatButton.className = 'floating-btn';
-        floatButton.onclick = () => toggleDropdownForGoal(li);
+        floatButton.onclick = (event) => {
+            event.stopPropagation();
+            toggleDropdownForGoal(li);
+        } 
 
         // Добавляем кнопку в элемент списка
         li.appendChild(floatButton);
@@ -275,6 +284,9 @@ function toggleDropdownForGoal(goalElement) {
     // Создаём контейнер для dropdown
     dropdown = document.createElement('div');
     dropdown.className = 'dropdown-container';
+
+     // Останавливаем всплытие клика на dropdown-container
+     dropdown.addEventListener('click', (event) => event.stopPropagation());
 
     // Создаём поле ввода и кнопку
     const input = document.createElement('input');
